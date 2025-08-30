@@ -17,14 +17,11 @@ Route::middleware('auth')->group(function () {
     Route::get('rumah_sakit', [RumahSakitController::class,'index'])->name('rumah_sakit.index');
     Route::post('rumah_sakit', [RumahSakitController::class,'store'])->name('rumah_sakit.store');
     Route::delete('rumah_sakit/{id}', [RumahSakitController::class,'destroy'])->name('rumah_sakit.destroy');
-
-    Route::post('rumah_sakit/{id}', [RumahSakitController::class,'ajaxUpdate'])->name('rumah_sakit.ajaxUpdate');
-
+    Route::put('rumah_sakit/{id}', [RumahSakitController::class,'ajaxUpdate'])->name('rumah_sakit.ajaxUpdate');
 
     Route::get('pasien', [PasienController::class,'index'])->name('pasien.index');
     Route::post('pasien', [PasienController::class,'store'])->name('pasien.store');
     Route::post('pasien/{id}', [PasienController::class,'ajaxUpdate'])->name('pasien.ajaxUpdate');
     Route::delete('pasien/{id}', [PasienController::class,'destroy'])->name('pasien.destroy');
-
     Route::get('pasien/filter/{rumah_sakit_id}', [PasienController::class,'filter'])->name('pasien.filter');
 });

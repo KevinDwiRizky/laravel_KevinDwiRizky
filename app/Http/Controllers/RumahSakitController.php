@@ -17,15 +17,29 @@ class RumahSakitController extends Controller {
     }
 
     public function store(Request $request){
-        $request->validate(['nama_rumah_sakit'=>'required']);
-        $rs = RumahSakit::create($request->only('nama_rumah_sakit','alamat','email','telepon'));
-        return response()->json($rs);
+        $request->validate([
+            'nama_rumah_sakit' => 'required',
+            'email' => 'nullable|email',
+            'telepon' => 'nullable|string',
+            'alamat' => 'nullable|string',
+        ]);
+
+        RumahSakit::create($request->only('nama_rumah_sakit','alamat','email','telepon'));
+        return redirect()->route('rumah_sakit.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function ajaxUpdate(Request $request, $id){
+        $request->validate([
+            'nama_rumah_sakit' => 'required',
+            'email' => 'nullable|email',
+            'telepon' => 'nullable|string',
+            'alamat' => 'nullable|string',
+        ]);
+
         $rs = RumahSakit::findOrFail($id);
         $rs->update($request->only('nama_rumah_sakit','alamat','email','telepon'));
-        return response()->json($rs);
+
+        return redirect()->route('rumah_sakit.index')->with('success', 'Data berhasil diubah');
     }
 
     public function destroy($id){

@@ -18,23 +18,30 @@ class PasienController extends Controller
         return view('pasien.index', compact('pasien','rumahSakit'));
     }
 
-    public function store(Request $r){
-        $r->validate(['nama_pasien'=>'required','rumah_sakit_id'=>'required']);
-        $p = Pasien::create($r->only('nama_pasien','alamat','no_telpon','rumah_sakit_id'));
-        $p->load('rumahSakit');
-        return response()->json($p);
+    public function store(Request $request){
+        $request->validate([
+            'nama_pasien' => 'required|string|max:255',
+            'rumah_sakit_id' => 'required|exists:rumah_sakit,id'
+        ]);
+
+        $pasien = Pasien::create($request->only('nama_pasien','alamat','no_telpon','rumah_sakit_id'));
+        return redirect()->back()->with('success','Pasien berhasil ditambahkan.');
     }
 
-    public function ajaxUpdate(Request $r,$id){
-        $p = Pasien::findOrFail($id);
-        $p->update($r->only('nama_pasien','alamat','no_telpon','rumah_sakit_id'));
-        $p->load('rumahSakit');
-        return response()->json($p);
+    public function update(Request $request, $id){
+        $request->validate([
+            'nama_pasien' => 'required|string|max:255',
+            'rumah_sakit_id' => 'required|exists:rumah_sakit,id'
+        ]);
+
+        $pasien = Pasien::findOrFail($id);
+        $pasien->update($request->only('nama_pasien','alamat','no_telpon','rumah_sakit_id'));
+        return redirect()->back()->with('success','Pasien berhasil diupdate.');
     }
 
     public function destroy($id){
         Pasien::findOrFail($id)->delete();
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 
     public function filter($rumah_sakit_id){

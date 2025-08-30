@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_pasien');
             $table->string('alamat');
-            $table->string('no_telpon', 20);
+            $table->string('no_telponon', 20);
             $table->unsignedBigInteger('rumah_sakit_id');
             $table->foreign('rumah_sakit_id')->references('id')->on('rumah_sakit')->onDelete('cascade');
             $table->timestamps();

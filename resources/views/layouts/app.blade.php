@@ -18,6 +18,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('rumah_sakit.index') }}">Rumah Sakit</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('pasien.index') }}">Pasien</a>
+                    </li>
                 </ul>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
